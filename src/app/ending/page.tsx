@@ -1,6 +1,5 @@
 'use client'
 import { useEffect, useState } from "react";
-import { Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { EndingDescriptions } from "@/types/descriptions.js";
 import { BackgroundImage } from "@/data/bg_img";
@@ -43,39 +42,37 @@ const EndingPage = () => {
   };
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <div 
+      className="relative w-full min-h-screen bg-cover bg-center text-white flex flex-col items-center justify-center p-[2vw] transition-opacity duration-500"
+      style={{ 
+        backgroundImage: `url(${backgroundImage})`
+      }}
+    >
       <div 
-        className="relative w-full min-h-screen bg-cover bg-center text-white flex flex-col items-center justify-center p-[2vw] transition-opacity duration-500"
+        className={`absolute top-0 left-0 w-full h-full bg-black transition-opacity duration-500 ${isFadingOut ? "opacity-100" : "opacity-0"} z-50`}
+      />
+
+      <div 
+        className="absolute top-[15vh] text-center max-w-[80%] text-lg"
         style={{ 
-          backgroundImage: `url(${backgroundImage})`
+          fontSize: "clamp(20px, 2vw, 160px)", 
+          lineHeight: "clamp(1.5rem, 3vw, 3.5rem)",
+          letterSpacing: "clamp(0.05em, 0.1vw, 0.2em)"
         }}
       >
-        <div 
-          className={`absolute top-0 left-0 w-full h-full bg-black transition-opacity duration-500 ${isFadingOut ? "opacity-100" : "opacity-0"} z-50`}
-        />
-
-        <div 
-          className="absolute top-[15vh] text-center max-w-[80%] text-lg"
-          style={{ 
-            fontSize: "clamp(20px, 2vw, 160px)", 
-            lineHeight: "clamp(1.5rem, 3vw, 3.5rem)",
-            letterSpacing: "clamp(0.05em, 0.1vw, 0.2em)"
-          }}
-        >
-          {EndingDescriptions[endingKey as keyof typeof EndingDescriptions]}
-        </div>
-
-        <button 
-          onClick={handleNextExhibit}
-          className="absolute bottom-[10vh] right-[5vw] transform w-[50%] max-w-[500px] mt-10 px-10 py-5 text-white text-xl rounded-lg transition-transform duration-300 hover:scale-105"
-          style={{ 
-              fontSize: "clamp(20px, 2vw, 28px)",
-              backgroundColor: "#001419" }}
-        >
-          前往下個展間
-        </button>
+        {EndingDescriptions[endingKey as keyof typeof EndingDescriptions]}
       </div>
-    </Suspense>
+
+      <button 
+        onClick={handleNextExhibit}
+        className="absolute bottom-[10vh] right-[5vw] transform w-[50%] max-w-[500px] mt-10 px-10 py-5 text-white text-xl rounded-lg transition-transform duration-300 hover:scale-105"
+        style={{ 
+            fontSize: "clamp(20px, 2vw, 28px)",
+            backgroundColor: "#001419" }}
+      >
+        前往下個展間
+      </button>
+    </div>
   );
 };
 
