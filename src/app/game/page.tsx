@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ChoiceText, ChoicePosition } from "@/types/choices.js";
 import { BackgroundImage } from "@/data/bg_img.js";
 import { Descriptions } from "@/types/descriptions.js";
@@ -13,15 +13,6 @@ const GamePage = () => {
   const router = useRouter();
   const { stopMusic } = useMusic();
 
-  useEffect(() => {
-
-    if (!isFadingToBlack) return;
-    const fadeTimeout = setTimeout(() => setIsFadingToBlack(false), 500);
-
-    return () => {
-      clearTimeout(fadeTimeout);
-    };
-  }, [isFadingToBlack]);
   
   const handleClick = (nextScene: keyof typeof ChoiceText) => {
     setIsFadingToBlack(true);
@@ -30,6 +21,7 @@ const GamePage = () => {
           router.push(`/ending?scene=${nextScene}`);
         } else {
           setCurrentScene(nextScene);
+          setIsFadingToBlack(false);  
         }
       }, 500);
     };
@@ -44,11 +36,13 @@ const GamePage = () => {
     >
 
       <div 
-        className={`absolute top-0 left-0 w-full h-full bg-black transition-opacity duration-500 ${isFadingToBlack ? "opacity-100" : "opacity-0"} z-50`}
+        className={`absolute top-0 left-0 w-full h-full bg-black transition-opacity duration-500 
+          ${isFadingToBlack ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"} 
+          z-50`}
       />
 
       <div 
-        className="absolute top-[5vh] left-[5vw] right-[5vw] p-[2vw] text-lg transition-colors duration-500"
+        className="absolute top-[9%] left-[5vw] right-[5vw] p-[2vw] text-lg transition-colors duration-500"
         style={{ 
           fontSize: "clamp(18px, 1.9vw, 140px)", 
           color: isFadingToBlack ? "#000" : "#fff",
@@ -72,7 +66,7 @@ const GamePage = () => {
                 if (isFadingToBlack) return;
                 handleClick(nextScene);
               }}
-              className="w-[80%] max-w-[800px] min-h-[10vh] py-[1vh] px-[2vw] rounded-lg flex items-center justify-center text-center transition-colors duration-500 cursor-pointer"
+              className="w-[80%] max-w-[800px] min-h-[10vh] py-[1vh] px-[2vw] rounded-lg flex items-center justify-center text-center transition-colors duration-500 cursor-pointer hover:scale-105"
               style={{ 
                 fontSize: "clamp(16px, 1.5vw, 24px)", 
                 backgroundColor: isFadingToBlack ? "#000" : "#001419", 
@@ -89,7 +83,7 @@ const GamePage = () => {
 
       <a href={NextExhibitionURL}>
         <button 
-          className="absolute bottom-[2vh] left-[3vw] transform w-[20%] max-w-[250px] h-[7vh] max-h-[100px] rounded-lg flex items-center justify-center transition-colors duration-500 cursor-pointer"
+          className="absolute bottom-[3%] left-[3vw] transform w-[20%] max-w-[250px] h-[7vh] max-h-[6vh] rounded-lg flex items-center justify-center transition-colors duration-500 cursor-pointer hover:scale-105"
           onClick={() => {stopMusic();}}
           style={{ 
             fontSize: "clamp(10px, 1.2vw, 18px)", 
