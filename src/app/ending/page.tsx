@@ -70,7 +70,7 @@ const EndingPage = () => {
         onClick={handleNextExhibit}
         className="absolute bottom-[10vh] right-[5vw] transform w-[50%] max-w-[500px] mt-10 px-10 py-5 text-white text-xl rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105"
         style={{ 
-            fontSize: "clamp(20px, 2vw, 28px)",
+            fontSize: "clamp(1.5vw, 16px, 3vh)",
             backgroundColor: "#001419" }}
       >
         前往下個展間
