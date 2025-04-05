@@ -3,32 +3,50 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useMusic } from "@/utils/music"; 
 
-import { BackgroundImage } from "@/data/bg_img.js";
-
 const StartPage = () => {
   const [isFadingIn, setIsFadingIn] = useState(true);
   const [isFadingOut, setIsFadingOut] = useState(false);
   const router = useRouter();
+  const [backgroundImage, setBackgroundImage] = useState<string>("");
+  const originalImage = "封面.png";
   useMusic();
 
   useEffect(() => {
+    const updateBackground = () => {
+      const width = window.innerWidth;
+  
+      if (width < 750) {
+        setBackgroundImage(`/mobile/${originalImage}`);
+      } else {
+        setBackgroundImage(`/${originalImage}`);
+      }
+    };
+
+    window.addEventListener("resize", updateBackground);
+    updateBackground();
+
     setIsFadingIn(false);
-  }, []);
+
+    return () => {
+      window.removeEventListener("resize", updateBackground);
+    };
+  }, [backgroundImage]);
+
 
   const handleStartClick = () => {
     setIsFadingOut(true);
     setTimeout(() => {
       router.push("/game");
-    }, 500);
+    }, 1000);
   };
 
   return (
     <div 
-      className="relative w-full min-h-screen bg-cover bg-center flex items-center justify-center transition-opacity duration-500"
-      style={{ backgroundImage: `url(${BackgroundImage["start_page"]})`, fontFamily: "'Noto Serif TC', serif" }}
+      className="relative w-full min-h-screen bg-cover bg-center flex items-center justify-center transition-opacity duration-1000"
+      style={{ backgroundImage: `url(${backgroundImage})`, fontFamily: "'Noto Serif TC', serif" }}
     >
       <div
-        className={`absolute top-0 left-0 w-full h-full bg-black transition-opacity duration-500 ${
+        className={`absolute top-0 left-0 w-full h-full bg-black transition-opacity duration-1000 ${
           isFadingIn ? "opacity-100 pointer-events-auto" : isFadingOut ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         } z-50`}
       />

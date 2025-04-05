@@ -1,5 +1,5 @@
 'use client'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChoiceText, ChoicePosition } from "@/types/choices.js";
 import { BackgroundImage } from "@/data/bg_img.js";
 import { Descriptions } from "@/types/descriptions.js";
@@ -11,9 +11,17 @@ const GamePage = () => {
   const [currentScene, setCurrentScene] = useState<keyof typeof ChoiceText>("scene_1");
   const [isClicked, setIsClicked] = useState(false);
   const [isFadingToBlack, setIsFadingToBlack] = useState(false);
+  const [isFadingIn, setIsFadingIn] = useState(true);
   const router = useRouter();
   const { stopMusic } = useMusic();
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsFadingIn(false);
+    }, 200);
+
+    return () => clearTimeout(timer);
+  }, []);
   
   const handleClick = (nextScene: keyof typeof ChoiceText) => {
     setIsFadingToBlack(true);
@@ -24,12 +32,12 @@ const GamePage = () => {
           setCurrentScene(nextScene);
           setIsFadingToBlack(false);  
         }
-      }, 500);
+      }, 1000);
     };
 
   return (
     <div 
-      className="relative w-full min-h-screen bg-cover bg-center text-white font-serif p-[2vw] transition-opacity duration-500"
+      className="relative w-full min-h-screen bg-cover bg-center text-white font-serif p-[2vw] transition-opacity duration-1000"
       style={{ 
         backgroundImage: `url(/${BackgroundImage[currentScene]})`, 
         fontFamily: "'Noto Serif TC', serif" 
@@ -37,13 +45,13 @@ const GamePage = () => {
     >
 
       <div 
-        className={`absolute top-0 left-0 w-full h-full bg-black transition-opacity duration-500 
-          ${isFadingToBlack ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"} 
+        className={`absolute top-0 left-0 w-full h-full bg-black transition-opacity duration-1000 
+          ${isFadingToBlack || isFadingIn ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"} 
           z-50`}
       />
 
       <div 
-        className="absolute top-[9%] left-[5vw] right-[5vw] p-[2vw] text-lg transition-colors duration-500"
+        className="absolute top-[9%] left-[5vw] right-[5vw] p-[2vw] text-lg transition-colors duration-1000"
         style={{ 
           fontSize: "clamp(18px, 1.9vw, 140px)", 
           color: isFadingToBlack ? "#000" : "#fff",
@@ -71,10 +79,10 @@ const GamePage = () => {
 
                 setTimeout(() => {
                   setIsClicked(false);
-                }, 500);
+                }, 1000);
               }}
               className={`w-[80%] max-w-[800px] min-h-[10vh] py-[1vh] px-[2vw] rounded-lg flex 
-              items-center justify-center text-center transition-colors duration-500 
+              items-center justify-center text-center transition-colors duration-1000 
               cursor-pointer ${isClicked ? "" : "hover:scale-105"}`}
               style={{ 
                 fontSize: "clamp(16px, 1.5vw, 24px)", 
@@ -92,7 +100,7 @@ const GamePage = () => {
 
       <a href={NextExhibitionURL}>
         <button 
-          className="absolute bottom-[3%] left-[3vw] transform w-[20%] max-w-[250px] h-[7vh] max-h-[6vh] rounded-lg flex items-center justify-center transition-colors duration-500 cursor-pointer hover:scale-105"
+          className="absolute bottom-[3%] left-[3vw] transform w-[20%] max-w-[250px] h-[7vh] max-h-[6vh] rounded-lg flex items-center justify-center transition-colors duration-1000 cursor-pointer hover:scale-105"
           onClick={() => {stopMusic();}}
           style={{ 
             fontSize: "clamp(10px, 1.2vw, 18px)", 

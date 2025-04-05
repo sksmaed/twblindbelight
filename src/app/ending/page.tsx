@@ -8,6 +8,7 @@ import { useMusic } from "@/utils/music";
 
 const EndingPage = () => {
   const [isFadingOut, setIsFadingOut] = useState(false);
+  const [isFadingIn, setIsFadingIn] = useState(true);
   const searchParams = useSearchParams();
   const endingKey = (searchParams?.get("scene") as keyof typeof BackgroundImage) || "";
   const router = useRouter();
@@ -15,6 +16,9 @@ const EndingPage = () => {
   const { stopMusic } = useMusic();
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsFadingIn(false);
+    }, 200);
     const updateBackground = () => {
       const width = window.innerWidth;
 
@@ -30,6 +34,7 @@ const EndingPage = () => {
 
       return () => {
         window.removeEventListener("resize", updateBackground);
+        clearTimeout(timer);
       };
     }, [endingKey]);
 
@@ -43,15 +48,15 @@ const EndingPage = () => {
 
   return (
     <div 
-      className="relative w-full min-h-screen bg-cover bg-center text-white flex flex-col items-center justify-center p-[2vw] transition-opacity duration-500"
+      className="relative w-full min-h-screen bg-cover bg-center text-white flex flex-col items-center justify-center p-[2vw] transition-opacity duration-1000"
       style={{ 
         backgroundImage: `url(${backgroundImage})`,
         fontFamily: "'Noto Serif TC', serif"
       }}
     >
       <div 
-        className={`absolute top-0 left-0 w-full h-full bg-black transition-opacity duration-500 
-          ${isFadingOut ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"} 
+        className={`absolute top-0 left-0 w-full h-full bg-black transition-opacity duration-1000 
+          ${isFadingOut || isFadingIn ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"} 
           z-50`}
       />
 

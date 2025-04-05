@@ -16,7 +16,7 @@ export const MusicProvider = ({ children }: { children: React.ReactNode }) => {
     const bgMusic = new Howl({
       src: ["/background_music.mp3"],
       loop: true,
-      volume: 0.5,
+      volume: 1.0,
     });
     
     setSound(bgMusic);
