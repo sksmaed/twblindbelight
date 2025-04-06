@@ -9,7 +9,7 @@ import { useMusic } from "@/utils/music";
 
 const GamePage = () => {
   const [currentScene, setCurrentScene] = useState<keyof typeof ChoiceText>("scene_1");
-  const [, setIsClicked] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
   const [isFadingToBlack, setIsFadingToBlack] = useState(false);
   const [isFadingIn, setIsFadingIn] = useState(true);
   const router = useRouter();
@@ -81,9 +81,11 @@ const GamePage = () => {
                   setIsClicked(false);
                 }, 1000);
               }}
-              className={`w-[80%] max-w-[800px] min-h-[10vh] py-[1vh] px-[2vw] rounded-lg flex 
-              items-center justify-center text-center transition-colors duration-1000 
-              cursor-pointer button-hover-effect`}
+              className={`w-[80%] max-w-[800px] min-h-[10vh] py-[1vh] px-[2vw] rounded-lg 
+                flex items-center justify-center text-center transition-all duration-500 cursor-pointer 
+                ${isClicked ? "" : "hover:scale-105"} 
+                active:scale-95 active:opacity-90`}
+              
               style={{ 
                 fontSize: "clamp(16px, 1.5vw, 24px)", 
                 backgroundColor: isFadingToBlack ? "#000" : "#001419", 
