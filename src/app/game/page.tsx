@@ -32,6 +32,8 @@ const GamePage = () => {
           setCurrentScene(nextScene);
           setIsFadingToBlack(false);  
         }
+        setIsClicked(false);
+        (document.activeElement as HTMLElement | null)?.blur();
       }, 1000);
     };
 
