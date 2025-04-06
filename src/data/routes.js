@@ -4,4 +4,4 @@ export const Routes = {
     EndingPage: { path: "/ending" },
 };
 
-export const NextExhibitionURL = "https://www.artsteps.com/embed/67bf0fb34995b7d59e91e569/560/315"
+export const NextExhibitionURL = "https://www.artsteps.com/embed/67e3ea050deb24528e70ed6e/560/315"

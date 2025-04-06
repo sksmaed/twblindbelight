@@ -170,7 +170,7 @@ export const ChoicePosition = {
     scene_17: {
         choice_1: "scene_18",
         choice_2: "scene_19",
-        choice_3: "scene_13"
+        choice_3: "scene_21"
     },
     scene_18: {
         choice_1: "scene_21",
