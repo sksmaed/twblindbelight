@@ -9,7 +9,7 @@ import { useMusic } from "@/utils/music";
 
 const GamePage = () => {
   const [currentScene, setCurrentScene] = useState<keyof typeof ChoiceText>("scene_1");
-  const [isClicked, setIsClicked] = useState(false);
+  const [, setIsClicked] = useState(false);
   const [isFadingToBlack, setIsFadingToBlack] = useState(false);
   const [isFadingIn, setIsFadingIn] = useState(true);
   const router = useRouter();
