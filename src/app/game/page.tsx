@@ -85,8 +85,7 @@ const GamePage = () => {
               }}
               className={`w-[80%] max-w-[800px] min-h-[10vh] py-[1vh] px-[2vw] rounded-lg 
                 flex items-center justify-center text-center transition-all duration-500 cursor-pointer 
-                ${isClicked ? "" : "hover:scale-105"} 
-                active:scale-95 active:opacity-90`}
+                button-hover-effect active:scale-95 active:opacity-90`}
               
               style={{ 
                 fontSize: "clamp(16px, 1.5vw, 24px)", 
